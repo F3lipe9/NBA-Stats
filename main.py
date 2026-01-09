@@ -6,9 +6,9 @@ stat = str(input("What Stat Do You want? "))
 
 # Create Data and Merge to create one DataFrame
 
-playoffs = pd.read_csv("play_off_totals_2010_2024.csv")
+playoffs = pd.read_csv("data/play_off_totals_2010_2024.csv")
 
-regularSeason = pd.read_csv("regular_season_totals_2010_2024.csv")
+regularSeason = pd.read_csv("data/regular_season_totals_2010_2024.csv")
 
 fullSeason = pd.concat([regularSeason, playoffs])
 
