@@ -33,112 +33,38 @@ recentSeasons = fullSeason[fullSeason["SEASON_YEAR"] >= "2020-21"]
 # 5114 * 2  = 10228, each game gets stat for each team
 # My Data Set has 10238
 
+# Map stat names to column names
+statMapping = {
+    "Points": "PTS",
+    "3PM": "FG3M",
+    "3PA": "FG3A",
+    "FGM": "FGM",
+    "FGA": "FGA",
+    "FTM": "FTM",
+    "FTA": "FTA",
+    "Assists": "AST",
+    "Rebounds": "REB",
+    "OREB": "OREB",
+    "DREB": "DREB",
+    "Steals": "STL",
+    "Blocks": "BLK",
+    "Turnovers": "TOV",
+    "Fouls": "PF",
+    "Plus/Minus": "PLUS_MINUS"
+}
+
 # Get Stats Wanted
-
-def points(yearWanted):
+def getStat(yearWanted, stat):
     singleSeason = recentSeasons[recentSeasons["SEASON_YEAR"] == yearWanted]
-    print(singleSeason.groupby(["TEAM_ABBREVIATION"])["PTS"].sum())
-
-def threePtsMade(yearWanted):
-    singleSeason = recentSeasons[recentSeasons["SEASON_YEAR"] == yearWanted]
-    print(singleSeason.groupby(["TEAM_ABBREVIATION"])["FG3M"].sum())
-
-def threePtsAttempted(yearWanted):
-    singleSeason = recentSeasons[recentSeasons["SEASON_YEAR"] == yearWanted]
-    print(singleSeason.groupby(["TEAM_ABBREVIATION"])["FG3A"].sum())
-
-def fieldGoalsMade(yearWanted):
-    singleSeason = recentSeasons[recentSeasons["SEASON_YEAR"] == yearWanted]
-    print(singleSeason.groupby(["TEAM_ABBREVIATION"])["FGM"].sum())
-
-def fieldGoalsAttempted(yearWanted):
-    singleSeason = recentSeasons[recentSeasons["SEASON_YEAR"] == yearWanted]
-    print(singleSeason.groupby(["TEAM_ABBREVIATION"])["FGA"].sum())
-
-def freeThrowsMade(yearWanted):
-    singleSeason = recentSeasons[recentSeasons["SEASON_YEAR"] == yearWanted]
-    print(singleSeason.groupby(["TEAM_ABBREVIATION"])["FTM"].sum())
-
-def freeThrowsAttempted(yearWanted):
-    singleSeason = recentSeasons[recentSeasons["SEASON_YEAR"] == yearWanted]
-    print(singleSeason.groupby(["TEAM_ABBREVIATION"])["FTA"].sum())
-
-def assists(yearWanted):
-    singleSeason = recentSeasons[recentSeasons["SEASON_YEAR"] == yearWanted]
-    print(singleSeason.groupby(["TEAM_ABBREVIATION"])["AST"].sum())
-
-def rebounds(yearWanted):
-    singleSeason = recentSeasons[recentSeasons["SEASON_YEAR"] == yearWanted]
-    print(singleSeason.groupby(["TEAM_ABBREVIATION"])["REB"].sum())
-
-def offensiveRebounds(yearWanted):
-    singleSeason = recentSeasons[recentSeasons["SEASON_YEAR"] == yearWanted]
-    print(singleSeason.groupby(["TEAM_ABBREVIATION"])["OREB"].sum())
-
-def defensiveRebounds(yearWanted):
-    singleSeason = recentSeasons[recentSeasons["SEASON_YEAR"] == yearWanted]
-    print(singleSeason.groupby(["TEAM_ABBREVIATION"])["DREB"].sum())
-
-def steals(yearWanted):
-    singleSeason = recentSeasons[recentSeasons["SEASON_YEAR"] == yearWanted]
-    print(singleSeason.groupby(["TEAM_ABBREVIATION"])["STL"].sum())
-
-def blocks(yearWanted):
-    singleSeason = recentSeasons[recentSeasons["SEASON_YEAR"] == yearWanted]
-    print(singleSeason.groupby(["TEAM_ABBREVIATION"])["BLK"].sum())
-
-def turnovers(yearWanted):
-    singleSeason = recentSeasons[recentSeasons["SEASON_YEAR"] == yearWanted]
-    print(singleSeason.groupby(["TEAM_ABBREVIATION"])["TOV"].sum())
-
-def personalFouls(yearWanted):
-    singleSeason = recentSeasons[recentSeasons["SEASON_YEAR"] == yearWanted]
-    print(singleSeason.groupby(["TEAM_ABBREVIATION"])["PF"].sum())
-
-def plusMinus(yearWanted):
-    singleSeason = recentSeasons[recentSeasons["SEASON_YEAR"] == yearWanted]
-    print(singleSeason.groupby(["TEAM_ABBREVIATION"])["PLUS_MINUS"].sum())
-
-def games(yearWanted):
-    singleSeason = recentSeasons[recentSeasons["SEASON_YEAR"] == yearWanted]
-    print(singleSeason.groupby(["TEAM_ABBREVIATION"]).size())
-
-# Switch Case To Run Function of Stat Wanted
-match stat:
-    case "Points":
-        points(yearWanted)
-    case "3PM":
-        threePtsMade(yearWanted)
-    case "3PA":
-        threePtsAttempted(yearWanted)
-    case "FGM":
-        fieldGoalsMade(yearWanted)
-    case "FGA":
-        fieldGoalsAttempted(yearWanted)
-    case "FTM":
-        freeThrowsMade(yearWanted)
-    case "FTA":
-        freeThrowsAttempted(yearWanted)
-    case "Assists":
-        assists(yearWanted)
-    case "Rebounds":
-        rebounds(yearWanted)
-    case "OREB":
-        offensiveRebounds(yearWanted)
-    case "DREB":
-        defensiveRebounds(yearWanted)
-    case "Steals":
-        steals(yearWanted)
-    case "Blocks":
-        blocks(yearWanted)
-    case "Turnovers":
-        turnovers(yearWanted)
-    case "Fouls":
-        personalFouls(yearWanted)
-    case "Plus/Minus":
-        plusMinus(yearWanted)
-    case "Games":
-        games(yearWanted)
-    case _:
+    
+    if stat == "Games":
+        print(singleSeason.groupby(["TEAM_ABBREVIATION"]).size())
+    elif stat in statMapping:
+        columnName = statMapping[stat]
+        print(singleSeason.groupby(["TEAM_ABBREVIATION"])[columnName].sum())
+    else:
         print("Invalid stat. Please try again.")
+
+# Run the function
+getStat(yearWanted, stat)
 

@@ -76,12 +76,15 @@ The project requires two CSV files in the `data/` directory:
 
 ## How It Works
 
-1. Loads regular season and playoff data from CSV files
-2. Concatenates both datasets
-3. Removes duplicate games and unnecessary ranking columns
+1. Loads regular season and playoff data from CSV files located in the `data/` directory
+2. Concatenates both datasets into a unified dataframe
+3. Removes unnecessary ranking columns and duplicate game entries
 4. Filters data to seasons from 2020-21 onwards
-5. Groups statistics by team abbreviation
-6. Displays aggregated results for the requested statistic
+5. Uses a dictionary mapping system to convert user input into corresponding column names
+6. Groups statistics by team abbreviation and aggregates the results
+7. Displays the requested statistic for all teams in the selected season
+
+The application uses a streamlined single-function approach with a stat mapping dictionary, making it easy to maintain and extend with new statistics.
 
 ## Example
 
